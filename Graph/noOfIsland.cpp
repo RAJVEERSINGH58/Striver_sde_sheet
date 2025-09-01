@@ -5,6 +5,51 @@ using namespace std;
 
 class Solution {
 public:
+
+    vector<int> dx = {1 , 0 , -1 , 0};
+    vector<int> dy = {0 , 1 , 0 , -1};
+
+    int m , n;
+    bool isSafeIndex(vector<vector<char>>& grid , int i , int j){
+        return i >= 0 && j >= 0 && i < m && j < n;
+    }
+
+    void dfs(vector<vector<char>>& grid , int i , int j){
+
+        if(! isSafeIndex(grid, i , j) || grid[i][j] == '0') return;
+
+        grid[i][j] = '0';
+
+        for(int k = 0 ; k < 4 ; k++){
+            dfs(grid , i + dx[k] , j + dy[k]);
+        }
+
+        return;
+
+    }
+
+    int numIslands(vector<vector<char>>& grid) {
+        int cc = 0;
+
+        m = grid.size();
+        n = grid[0].size();
+
+        for(int i = 0 ; i < m ; i++){
+            for(int j = 0 ; j < n ; j++){
+                if(grid[i][j] == '1'){
+                    dfs(grid , i , j);
+                    cc++;
+                }
+            }
+        }
+
+        return cc;
+
+    }
+};
+
+class Solution {
+public:
     int numIslands(vector<vector<char>>& grid) {
         int row = grid.size();
         int col = grid[0].size();
